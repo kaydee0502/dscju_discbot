@@ -35,4 +35,4 @@ for filename in os.listdir('./cogs'):
 
 
 
-client.run("NzY1MDg4MDYyMDM5NjU0NDQy.X4PtyA.0v44VKpT-aHDd0pBXvtdr0XJsmw")
+client.run(TOKEN)
