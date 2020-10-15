@@ -4,28 +4,35 @@ import os
 
 import discord
 from discord.ext import commands
+intents = discord.Intents.default()
+intents.typing = True
+intents.presences = True
+intents.members = True
+
+client = commands.Bot(command_prefix = '.',intents=intents)
 
 
 
-
-client = commands.Bot(command_prefix = '.')
-
-@client.event
-async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+@client.command()
+async def load(ctx, extension):
+    client.load_extension(f'cogs.{extension}')
 
 
-"""
-@client.event
-async def on_message(message):
-    print(message.content)
-    #await message.channel.send(message.content)
-"""
+
+@client.command()
+async def unload(ctx, extension):
+    client.unload_extension(f'cogs.{extension}')
+    
+@client.command()
+async def reload(ctx, extension):
+    client.unload_extension(f'cogs.{extension.lower()}')
+    client.load_extension(f'cogs.{extension.lower()}')
+    
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
 
-@client.command(name = "hi")
-async def test(ctx):
-    print("cmd ran")
-    await ctx.send("Who I am? you name it :)")
 
-client.run("NzY1MDg4MDYyMDM5NjU0NDQy.X4PtyA.hAi0kb5zTwAZ12EEkO6O3i4a6NA")
+client.run("NzY1MDg4MDYyMDM5NjU0NDQy.X4PtyA.0v44VKpT-aHDd0pBXvtdr0XJsmw")
